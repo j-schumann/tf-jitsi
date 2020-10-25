@@ -3,8 +3,7 @@
 parent_path=`dirname "$0"`
 cp $parent_path/../server-files/etc/sysctl.d/80-docker.conf /etc/sysctl.d/80-docker.conf
 
-# enp7s0
-export LOCALIP=`ip -o -4 addr show dev eth0 | cut -d' ' -f7 | cut -d'/' -f1`
+export LOCALIP=`ip -o -4 addr show dev enp7s0 | cut -d' ' -f7 | cut -d'/' -f1`
 docker swarm init --advertise-addr $LOCALIP
 
 # install docker-compose from github, ubuntu has an old version
@@ -41,3 +40,7 @@ sed -i \
 
 # stack deploy does not support env-files, so prepare the config using docker-compose first...
 docker stack deploy meet -c <(docker-compose -f $parent_path/../stacks/jitsi.yaml --env-file $parent_path/../stacks/.env config)
+
+# create the jitsi operators
+cp /tmp/prosody_users.txt /opt/
+xargs -l -a /tmp/prosody_users.txt docker exec $(docker ps -q -f name=meet_prosody) prosodyctl --config /config/prosody.cfg.lua register

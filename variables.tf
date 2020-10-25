@@ -4,6 +4,8 @@ variable "hcloud_token" {}
 
 variable "acme_mail" {}
 
+variable "users" {}
+
 variable "os_image" {
     default = "ubuntu-20.04"
 }

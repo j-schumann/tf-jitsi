@@ -30,7 +30,8 @@ resource "hcloud_server" "master" {
     ip_range       = var.ip_range,
     ssh_public_key = hcloud_ssh_key.root.public_key,
     public_ip      = hcloud_floating_ip.public_ip.ip_address
-    acme_mail     = var.acme_mail
+    acme_mail      = var.acme_mail
+    users          = var.users
   })
   ssh_keys    = [ hcloud_ssh_key.root.id ]
 }
