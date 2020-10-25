@@ -1,0 +1,9 @@
+[Docker Node]
+title=Docker Swarm Node
+description=Ports for swarm management & overlay communication
+ports=7946/tcp|4789,7946/udp
+
+[Docker Manager]
+title=Docker Swarm Manager
+description=Ports for swarm management & node discovery & overlay communication
+ports=2377,7946/tcp|4789,7946/udp

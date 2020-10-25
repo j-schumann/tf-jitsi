@@ -1,0 +1,4 @@
+[Jitsi]
+title=Jitsi Components
+description=Ports for Jitsi video bridge
+ports=4443/tcp|10000/udp

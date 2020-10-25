@@ -1,0 +1,4 @@
+[Gluster]
+title=GlusterFS Server
+description=Ports communication of gluster servers
+ports=24007,24008,49152/tcp|24007,24008,49152/udp
