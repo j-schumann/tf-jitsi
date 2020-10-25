@@ -52,7 +52,7 @@ runcmd:
  - export ACME_MAIL=${acme_mail}
  - export LOCAL_IP_RANGE=${ip_range}
  # load scripts & files from git, user-data can be limited to 16KB
- - git clone https://github.com/j-schumann/tf-dockerswarm.git /root/terraform-init
+ - git clone https://github.com/j-schumann/tf-jitsi.git /root/terraform-init
  - /root/terraform-init/scripts/setup-master.sh
  - echo "$LOCAL_IP_RANGE $PUBLIC_IP" >> /root/envvars
 
