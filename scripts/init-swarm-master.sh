@@ -14,10 +14,7 @@ chmod +x /usr/local/bin/docker-compose
 docker network create --opt encrypted --driver overlay traefik-net
 
 mkdir -p /opt/container-data/traefik
-mkdir -p /opt/container-data/jitsi/
-
-#sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" $parent_path/../stacks/.env
-#sed -i "s/ACME_MAIL/$ACME_MAIL/g" $parent_path/../stacks/.env
+mkdir -p /opt/container-data/jitsi/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}
 
 function generatePassword() {
     openssl rand -hex 16
@@ -41,5 +38,5 @@ sed -i \
     -e "s#JIBRI_XMPP_PASSWORD=.*#JIBRI_XMPP_PASSWORD=${JIBRI_XMPP_PASSWORD}#g" \
     "$parent_path/../stacks/.env"
 
-# stack deploy does not support env-files like docker-compose does...
+# stack deploy does not support env-files, so prepare the config using docker-compose first...
 docker stack deploy meet -c <(docker-compose -f $parent_path/../stacks/jitsi.yaml --env-file $parent_path/../stacks/.env config)
