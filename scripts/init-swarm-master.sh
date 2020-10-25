@@ -3,8 +3,9 @@
 parent_path=`dirname "$0"`
 cp $parent_path/../server-files/etc/sysctl.d/80-docker.conf /etc/sysctl.d/80-docker.conf
 
-export LOCALIP=`ip -o -4 addr show dev ens10 | cut -d' ' -f7 | cut -d'/' -f1`
-docker swarm init --advertise-addr $LOCALIP
+#export LOCALIP=`ip -o -4 addr show dev ens10 | cut -d' ' -f7 | cut -d'/' -f1`
+#docker swarm init --advertise-addr $LOCALIP
+docker swarm init 
 
 # shared, encrypted mesh network for all containers on all nodes
 docker network create --opt encrypted --driver overlay traefik-net
