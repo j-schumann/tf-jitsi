@@ -3,18 +3,21 @@
 parent_path=`dirname "$0"`
 cp $parent_path/../server-files/etc/sysctl.d/80-docker.conf /etc/sysctl.d/80-docker.conf
 
-#export LOCALIP=`ip -o -4 addr show dev ens10 | cut -d' ' -f7 | cut -d'/' -f1`
-#docker swarm init --advertise-addr $LOCALIP
-docker swarm init 
+export LOCALIP=`ip -o -4 addr show dev enp7s0 | cut -d' ' -f7 | cut -d'/' -f1`
+docker swarm init --advertise-addr $LOCALIP
+
+# install docker-compose from github, ubuntu has an old version
+curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
 
 # shared, encrypted mesh network for all containers on all nodes
 docker network create --opt encrypted --driver overlay traefik-net
 
 mkdir -p /opt/container-data/traefik
-mkdir -p /opt/container-data/jitsi
+mkdir -p /opt/container-data/jitsi/
 
-sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" $parent_path/../stacks/.env
-sed -i "s/ACME_MAIL/$ACME_MAIL/g" $parent_path/../stacks/.env
+#sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" $parent_path/../stacks/.env
+#sed -i "s/ACME_MAIL/$ACME_MAIL/g" $parent_path/../stacks/.env
 
 function generatePassword() {
     openssl rand -hex 16
@@ -27,7 +30,9 @@ JIGASI_XMPP_PASSWORD=$(generatePassword)
 JIBRI_RECORDER_PASSWORD=$(generatePassword)
 JIBRI_XMPP_PASSWORD=$(generatePassword)
 
-sed -i.bak \
+sed -i \
+    -e "s#PUBLIC_IP#$PUBLIC_IP#g" \
+    -e "s#ACME_MAIL#$ACME_MAIL#g" \
     -e "s#JICOFO_COMPONENT_SECRET=.*#JICOFO_COMPONENT_SECRET=${JICOFO_COMPONENT_SECRET}#g" \
     -e "s#JICOFO_AUTH_PASSWORD=.*#JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}#g" \
     -e "s#JVB_AUTH_PASSWORD=.*#JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD}#g" \
@@ -37,6 +42,4 @@ sed -i.bak \
     "$parent_path/../stacks/.env"
 
 # stack deploy does not support env-files like docker-compose does...
-#env $(cat $parent_path/../stacks/.env | grep ^[A-Z] | xargs) docker stack deploy meet -c $parent_path/../stacks/jitsi.yaml
-
-docker stack deploy meet -c $parent_path/../stacks/jitsi.yaml
+docker stack deploy meet -c <(docker-compose -f $parent_path/../stacks/jitsi.yaml --env-file $parent_path/../stacks/.env config)

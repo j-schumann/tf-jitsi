@@ -1,8 +1,5 @@
 version: '3.8'
 
-env_file:
-  - .env
-
 networks:
   traefik-net:
     external: true
@@ -55,7 +52,6 @@ services:
         - traefik.http.routers.traefik-net-https.tls=true
         - traefik.http.routers.traefik-net-https.tls.certresolver=le
         - traefik.http.services.traefik-net.loadbalancer.server.port=80
-    restart: ${RESTART_POLICY}
     volumes:
       - ${CONFIG}/web:/config:Z
       - ${CONFIG}/web/letsencrypt:/etc/letsencrypt:Z
@@ -99,7 +95,6 @@ services:
       replicas: 1
       placement:
         constraints: [node.role==manager]
-    restart: ${RESTART_POLICY}
     expose:
       - '5222'
       - '5347'
@@ -169,7 +164,6 @@ services:
       replicas: 1
       placement:
         constraints: [node.role==manager]
-    restart: ${RESTART_POLICY}
     volumes:
       - ${CONFIG}/jicofo:/config:Z
     environment:
@@ -201,7 +195,6 @@ services:
       replicas: 1
       placement:
         constraints: [node.role==manager]
-    restart: ${RESTART_POLICY}
     ports:
       - '${JVB_PORT}:${JVB_PORT}/udp'
       - '${JVB_TCP_MAPPED_PORT}:${JVB_TCP_PORT}'
@@ -233,7 +226,6 @@ services:
       replicas: 1
       placement:
         constraints: [node.role==manager]
-    restart: ${RESTART_POLICY}
     networks:
       traefik-net:
         aliases:
