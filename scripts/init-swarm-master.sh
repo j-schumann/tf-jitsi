@@ -36,4 +36,7 @@ sed -i.bak \
     -e "s#JIBRI_XMPP_PASSWORD=.*#JIBRI_XMPP_PASSWORD=${JIBRI_XMPP_PASSWORD}#g" \
     "$parent_path/../stacks/.env"
 
+# stack deploy does not support env-files like docker-compose does...
+#env $(cat $parent_path/../stacks/.env | grep ^[A-Z] | xargs) docker stack deploy meet -c $parent_path/../stacks/jitsi.yaml
+
 docker stack deploy meet -c $parent_path/../stacks/jitsi.yaml
