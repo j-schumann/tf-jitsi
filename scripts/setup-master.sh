@@ -13,3 +13,6 @@ $parent_path/init-security-master.sh
 
 echo "Creating the Docker Swearm..."
 $parent_path/init-swarm-master.sh
+
+echo "Creating the Jitsi operators..."
+$parent_path/create-prosody-users.sh
