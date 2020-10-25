@@ -52,7 +52,7 @@ runcmd:
  - export PUBLIC_IP=${public_ip}
  - export ACME_MAIL=${acme_mail}
  - export LOCAL_IP_RANGE=${ip_range}
- - echo "${users}" > /tmp/prosody_users.txt
+ - export PROSODY_USERS="${users}"
  # load scripts & files from git, user-data can be limited to 16KB
  - git clone https://github.com/j-schumann/tf-jitsi.git /root/terraform-init
  - /root/terraform-init/scripts/setup-master.sh
