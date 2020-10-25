@@ -49,7 +49,7 @@ users:
 
 runcmd:
  - export PUBLIC_IP=${public_ip}
- - export ACME_EMAIL=${acme_email}
+ - export ACME_MAIL=${acme_mail}
  - export LOCAL_IP_RANGE=${ip_range}
  # load scripts & files from git, user-data can be limited to 16KB
  - git clone https://github.com/j-schumann/tf-dockerswarm.git /root/terraform-init

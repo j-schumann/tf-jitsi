@@ -2,7 +2,7 @@
 # or using the -var="hcloud_token=..." CLI option
 variable "hcloud_token" {}
 
-variable "acme_email" {}
+variable "acme_mail" {}
 
 variable "os_image" {
     default = "ubuntu-20.04"
