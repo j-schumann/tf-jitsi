@@ -48,6 +48,7 @@ users:
     - ALL=(ALL) NOPASSWD:ALL
 
 runcmd:
+ - export PUBLIC_DOMAIN=${public_domain}
  - export PUBLIC_IP=${public_ip}
  - export ACME_MAIL=${acme_mail}
  - export LOCAL_IP_RANGE=${ip_range}

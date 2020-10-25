@@ -6,6 +6,8 @@ variable "acme_mail" {}
 
 variable "users" {}
 
+variable "public_domain" {}
+
 variable "os_image" {
     default = "ubuntu-20.04"
 }

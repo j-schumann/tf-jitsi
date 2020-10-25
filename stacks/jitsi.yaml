@@ -44,10 +44,10 @@ services:
         - traefik.docker.network=traefik-net
         - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
         - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
-        - traefik.http.routers.traefik-net-http.rule=Host(`test.vrok.de`)
+        - traefik.http.routers.traefik-net-http.rule=Host(`${PUBLIC_DOMAIN}`)
         - traefik.http.routers.traefik-net-http.entrypoints=http
         - traefik.http.routers.traefik-net-http.middlewares=https-redirect
-        - traefik.http.routers.traefik-net-https.rule=Host(`test.vrok.de`)
+        - traefik.http.routers.traefik-net-https.rule=Host(`${PUBLIC_DOMAIN}`)
         - traefik.http.routers.traefik-net-https.entrypoints=https
         - traefik.http.routers.traefik-net-https.tls=true
         - traefik.http.routers.traefik-net-https.tls.certresolver=le
@@ -95,11 +95,11 @@ services:
       replicas: 1
       placement:
         constraints: [node.role==manager]
-    expose:
-      - '5222'
-      - '5347'
-      - '5280'
-    hostname: meet.vrok.de
+#    expose:
+#      - '5222'
+#      - '5347'
+#      - '5280'
+    hostname: ${PUBLIC_DOMAIN}
     volumes:
       - ${CONFIG}/prosody/config:/config:Z
       - ${CONFIG}/prosody/prosody-plugins-custom:/prosody-plugins-custom:Z
@@ -183,8 +183,6 @@ services:
       - JIBRI_BREWERY_MUC
       - JIBRI_PENDING_TIMEOUT
       - TZ
-#    depends_on:
-#      - prosody
     networks:
       traefik-net:
 
@@ -214,14 +212,12 @@ services:
       - JVB_STUN_SERVERS
       - JVB_ENABLE_APIS
       - TZ
-#    depends_on:
-#      - prosody
     networks:
       traefik-net:
 
   # Etherpad: real-time collaborative document editing
   etherpad:
-    image: jitsi/etherpad:stable
+    image: jitsi/etherpad:latest
     deploy:
       replicas: 1
       placement:
