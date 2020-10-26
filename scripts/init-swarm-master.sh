@@ -22,7 +22,7 @@ mkdir -p /opt/container-data/traefik
 mkdir -p /opt/container-data/jitsi/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}
 
 # prepare jitsi config
-cp $parent_path/../server-files/jitsi/web/* /opt/container-data/jitsi/web/
+cp -r $parent_path/../server-files/jitsi/* /opt/container-data/jitsi/
 
 function generatePassword() {
     openssl rand -hex 16
