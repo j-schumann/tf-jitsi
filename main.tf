@@ -27,8 +27,9 @@ resource "hcloud_server" "master" {
   server_type = var.master_type
   location    = var.location
   user_data   = templatefile("${path.module}/user-data/master.tpl", {
-    ip_range       = var.ip_range,
-    ssh_public_key = hcloud_ssh_key.root.public_key,
+    ip_range       = var.ip_range
+    ssh_public_key = hcloud_ssh_key.root.public_key
+    public_domain  = var.public_domain
     public_ip      = hcloud_floating_ip.public_ip.ip_address
     acme_mail      = var.acme_mail
     users          = var.users
