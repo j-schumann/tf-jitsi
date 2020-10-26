@@ -21,6 +21,10 @@ docker network create --opt encrypted --driver overlay traefik-net
 mkdir -p /opt/container-data/traefik
 mkdir -p /opt/container-data/jitsi/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}
 
+# prepare jitsi config
+cp $parent_path/../server-files/jitsi/web/* /opt/container-data/jitsi/web/
+sed -i "s/PUBLIC_DOMAIN/$PUBLIC_DOMAIN/g" /opt/container-data/jitsi/web/config.js
+
 function generatePassword() {
     openssl rand -hex 16
 }
