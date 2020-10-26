@@ -31,7 +31,7 @@ services:
       - --log
     networks:
       - traefik-net
-      
+
   jitsi:
     image: jitsi/web:latest
     deploy:
@@ -83,6 +83,10 @@ services:
       - JIBRI_RECORDER_USER
       - JIBRI_RECORDER_PASSWORD
       - ENABLE_RECORDING
+      - START_AUDIO_MUTED
+      - START_VIDEO_MUTED
+      - START_AUDIO_ONLY
+      - ENABLE_REQUIRE_DISPLAY_NAME
     networks:
       traefik-net:
         aliases:
@@ -95,10 +99,6 @@ services:
       replicas: 1
       placement:
         constraints: [node.role==manager]
-#    expose:
-#      - '5222'
-#      - '5347'
-#      - '5280'
     hostname: ${PUBLIC_DOMAIN}
     volumes:
       - ${CONFIG}/prosody/config:/config:Z
