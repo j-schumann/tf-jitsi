@@ -9,8 +9,12 @@ services:
   traefik:
     image: traefik:v2.3
     ports:
-      - 80:80
-      - 443:443
+      - target: 80
+        published: 80
+        mode: host
+      - target: 443
+        published: 443
+        mode: host
     deploy:
       placement:
         constraints: [node.role==manager]
@@ -194,8 +198,13 @@ services:
       placement:
         constraints: [node.role==manager]
     ports:
-      - '${JVB_PORT}:${JVB_PORT}/udp'
-      - '${JVB_TCP_MAPPED_PORT}:${JVB_TCP_PORT}'
+      - target: '${JVB_PORT}'
+        published: '${JVB_PORT}'
+        protocol: udp
+        mode: host
+      - target: '${JVB_TCP_MAPPED_PORT}'
+        published: '${JVB_TCP_PORT}'
+        mode: host
     volumes:
       - ${CONFIG}/jvb:/config:Z
     environment:
