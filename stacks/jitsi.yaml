@@ -91,6 +91,7 @@ services:
       - START_VIDEO_MUTED
       - START_AUDIO_ONLY
       - ENABLE_REQUIRE_DISPLAY_NAME
+      - TESTING_CAP_SCREENSHARE_BITRATE
     networks:
       traefik-net:
         aliases:
@@ -220,9 +221,13 @@ services:
       - JVB_TCP_PORT
       - JVB_STUN_SERVERS
       - JVB_ENABLE_APIS
+      - JVB_WS_DOMAIN
+      - JVB_WS_SERVER_ID
       - TZ
     networks:
       traefik-net:
+        aliases:
+          - jvb
 
   # Etherpad: real-time collaborative document editing
   etherpad:
