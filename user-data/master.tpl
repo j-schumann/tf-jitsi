@@ -62,5 +62,3 @@ power_state:
   mode: reboot
   message: First reboot after cloud-init
   condition: True
-
-final_message: "cloud-init finished after $UPTIME seconds"

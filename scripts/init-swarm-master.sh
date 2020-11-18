@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# required variables:
+# $ACME_MAIL = email address to register with letsencrypt
+# $PUBLIC_IP = IP address of the swarm master
+
 parent_path=`dirname "$0"`
 env_file="$parent_path/../stacks/.env"
 
@@ -21,7 +25,7 @@ docker network create --opt encrypted --driver overlay traefik-net
 mkdir -p /opt/container-data/traefik
 mkdir -p /opt/container-data/jitsi/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}
 
-# prepare jitsi config
+# prepare jitsi config - @todo remove because overwritten on container start?
 cp -r $parent_path/../server-files/jitsi/* /opt/container-data/jitsi/
 
 function generatePassword() {
@@ -37,7 +41,7 @@ JIBRI_RECORDER_PASSWORD=$(generatePassword)
 JIBRI_XMPP_PASSWORD=$(generatePassword)
 
 sed -i \
-    -e "s#PUBLIC_DOMAIN#$PUBLIC_DOMAIN#g" \
+    -e "s#ENV_PUBLIC_DOMAIN#$PUBLIC_DOMAIN#g" \
     -e "s#PUBLIC_IP#$PUBLIC_IP#g" \
     -e "s#ACME_MAIL#$ACME_MAIL#g" \
     -e "s#JICOFO_COMPONENT_SECRET=.*#JICOFO_COMPONENT_SECRET=${JICOFO_COMPONENT_SECRET}#g" \

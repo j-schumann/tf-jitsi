@@ -28,8 +28,8 @@ var interfaceConfig = {
     GENERATE_ROOMNAMES_ON_WELCOME_PAGE: false,
     DISPLAY_WELCOME_PAGE_CONTENT: true,
     DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
-    APP_NAME: 'Jitsi@Vrok',
-    NATIVE_APP_NAME: 'Jitsi@Vrok',
+    APP_NAME: 'Meet@vrok',
+    NATIVE_APP_NAME: 'Meet@vrok',
     PROVIDER_NAME: 'Vrok',
     LANG_DETECTION: true, // Allow i18n to detect the system language
     INVITATION_POWERED_BY: true,
